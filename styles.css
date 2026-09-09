@@ -1,0 +1,179 @@
+/* ==========================================================================
+   KREA'BYTS - ESTILOS PRINCIPALES (CSS)
+   ========================================================================== */
+
+/* Estilos de tipografía y fondo general */
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #f8fafc;
+}
+
+/* Glassmorphism para el Header */
+.glass-header {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Ocultar barra de desplazamiento en contenedores horizontales */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Badge de Promoción al Mayor */
+.wholesale-badge {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+/* ==========================================================================
+   SISTEMA DE TOUR INTERACTIVO
+   ========================================================================== */
+.tour-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.85); /* slate-900 / 85% */
+    z-index: 9998;
+    backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease;
+}
+
+.tour-highlight {
+    position: relative;
+    z-index: 9999 !important;
+    pointer-events: auto !important;
+    background: white;
+    border-radius: inherit;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.5), 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease;
+}
+
+.tour-highlight-transparent {
+    position: relative;
+    z-index: 9999 !important;
+    pointer-events: auto !important;
+}
+
+.tour-tooltip {
+    position: fixed;
+    z-index: 10000;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    width: calc(100% - 32px);
+    max-width: 340px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: auto;
+}
+
+.tour-tooltip.active {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   ESTILOS EXPLÍCITOS DEL RECIBO (Para html2canvas)
+   Tailwind puede no renderizar correctamente en html2canvas; usamos CSS puro.
+   ========================================================================== */
+
+#receiptCaptureArea {
+    background: #ffffff;
+    width: 500px;
+    padding: 32px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #0f172a;
+    border: 12px double rgba(30, 58, 138, 0.1);
+    position: relative;
+}
+
+#receiptCaptureArea table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #1e3a8a;
+    margin-bottom: 24px;
+    font-size: 16px;
+}
+
+#receiptCaptureArea table thead tr {
+    background-color: #1e3a8a;
+    color: #ffffff;
+}
+
+#receiptCaptureArea table th,
+#receiptCaptureArea table td {
+    border: 1px solid #1e3a8a;
+    padding: 8px 12px;
+}
+
+#receiptCaptureArea table th {
+    font-weight: 900;
+}
+
+#receiptCaptureArea table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#receiptCaptureArea table tbody tr:nth-child(even) {
+    background-color: #e9d5f5; /* morado claro como la imagen de referencia */
+}
+
+#receiptCaptureArea table tbody td {
+    font-weight: 700;
+    color: #1e3a8a;
+}
+
+#receiptCaptureArea table tfoot tr:last-child {
+    background-color: #f1f5f9;
+}
+
+#receiptCaptureArea table tfoot td {
+    font-weight: 900;
+    font-size: 18px;
+    color: #1e3a8a;
+}
+
+/* Fila de delivery en el recibo */
+#receiptDeliveryRow {
+    background-color: #fffbeb;
+}
+
+#receiptDeliveryRow td {
+    color: #92400e;
+    font-weight: 700;
+}
+
+/* Pie del recibo */
+#receiptCaptureArea .receipt-footer {
+    text-align: center;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 2px dashed #c7d2fe;
+    font-size: 12px;
+    color: #64748b;
+}

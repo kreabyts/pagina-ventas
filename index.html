@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Krea'byts - Productos de Limpieza & Desinfección en Barquisimeto</title>
+    <meta name="description" content="Catálogo online de productos de limpieza, jabones, desinfectantes y desengrasantes de alta concentración en Barquisimeto. ¡15% de descuento al mayor a partir de 10 litros por producto!">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f3ff',
+                            100: '#e0e7ff',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#1e3a8a',
+                            900: '#0f172a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS y JS para Mapa Interactivo sin costo -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Estilos Personalizados Raíz -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen flex flex-col text-slate-900 antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- BANNER DE UBICACIÓN INTERACTIVO (AL HACER CLIC ABRE EL MAPA) -->
+    <div onclick="openMapModal()" class="bg-indigo-900 text-indigo-100 text-[11px] sm:text-sm py-2 px-3 sm:px-4 text-center font-semibold flex items-center justify-center gap-1.5 sm:gap-2 shadow-inner cursor-pointer hover:bg-indigo-950 transition">
+        <i class="fa-solid fa-location-dot text-indigo-400 text-sm sm:text-base animate-bounce"></i>
+        <span>Ubícanos en: <strong>Barquisimeto, Estado Lara, Venezuela 🇻🇪</strong></span>
+        <span class="bg-indigo-800 hover:bg-indigo-700 text-white text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold ml-1 flex items-center gap-1 border border-indigo-400/40">
+            <i class="fa-solid fa-map"></i> Abrir Mapa
+        </span>
+    </div>
+
+    <!-- NAVEGACIÓN PRINCIPAL RESPONSIVA -->
+    <header class="glass-header sticky top-0 z-40 border-b border-slate-200 shadow-sm transition-all">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Logo Marca (Gota kreabyts.jpg + Texto Krea'byts) -->
+            <a href="#" class="flex items-center gap-2.5 sm:gap-3 group">
+                <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden shadow-md shadow-indigo-200 border border-indigo-100 group-hover:scale-105 transition-transform bg-white flex items-center justify-center p-0.5">
+                    <img src="kreabyts.jpg" alt="Logo Krea'byts" class="w-full h-full object-contain">
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex items-baseline leading-none">
+                        <span class="text-xl sm:text-3xl font-black tracking-tight text-indigo-950">Krea'byts</span>
+                    </div>
+                    <span class="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-slate-500 mt-0.5">Limpieza Profesional</span>
+                </div>
+            </a>
+
+            <!-- Botones de Acción Nav -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="toggleCart()" class="relative flex items-center gap-1.5 sm:gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shadow-md shadow-indigo-200 transition active:scale-95">
+                    <i class="fa-solid fa-basket-shopping text-base sm:text-lg"></i>
+                    <span>Ver Pedido</span>
+                    <span id="cart-count" class="bg-indigo-900 text-white text-[10px] sm:text-xs font-black px-1.5 sm:px-2 py-0.5 rounded-full shadow-inner">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION ADAPTADO A MÓVIL Y TABLET -->
+    <section class="relative bg-gradient-to-br from-indigo-900 via-indigo-800 to-slate-900 text-white py-10 sm:py-16 px-4 overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10 space-y-3.5 sm:space-y-4">
+            
+            <!-- Imagen de la Gota Krea'byts en el Hero -->
+            <div class="relative w-20 h-20 sm:w-32 sm:h-32 mx-auto mb-1 sm:mb-2 cursor-pointer" onclick="openMapModal()">
+                <div class="absolute -inset-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-md opacity-80 animate-pulse"></div>
+                <div class="relative w-full h-full rounded-2xl overflow-hidden bg-white p-1 shadow-2xl border-2 border-indigo-300 transform hover:scale-105 transition duration-300 flex items-center justify-center">
+                    <img src="kreabyts.jpg" alt="Logo Krea'byts" class="w-full h-full object-contain">
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-1">
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-indigo-500/20 text-indigo-200 border border-indigo-400/30">
+                    <i class="fa-solid fa-sparkles text-amber-300"></i> Fórmulas Concentradas
+                </span>
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                    <i class="fa-solid fa-tag text-emerald-400"></i> 🔥 15% OFF al llevar 10+ L por producto
+                </span>
+            </div>
+
+            <h1 class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight text-white mt-2">
+                Bienvenidos
+            </h1>
+            <p class="text-slate-300 text-xs sm:text-base md:text-lg max-w-2xl mx-auto font-medium leading-relaxed">
+                Calidad garantizada para el cuidado profundo de tu hogar, oficina o negocio. Agrega <strong>10 litros o más de un mismo producto</strong> y obtén un <strong>15% de descuento automático</strong> en ese ítem.
+            </p>
+            
+            <!-- Beneficios Rápidos -->
+            <div class="pt-2 flex flex-wrap justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs font-semibold text-indigo-200">
+                <span class="flex items-center gap-1"><i class="fa-solid fa-circle-check text-indigo-400"></i> Precios competitivos</span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-bottle-droplet text-emerald-400"></i> 15% desc. al mayor por producto</span>
+                <span onclick="openMapModal()" class="flex items-center gap-1 cursor-pointer hover:text-white underline"><i class="fa-solid fa-map-location-dot text-indigo-400"></i> Ubicación exacta con Mapa / GPS</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- BÚSQUEDA A ANCHO COMPLETO -->
+    <section class="w-full px-3 sm:px-6 -mt-6 relative z-20">
+        <div class="bg-white px-3 py-3 sm:px-5 sm:py-4 rounded-2xl shadow-xl border border-slate-200">
+            <div class="relative w-full">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm sm:text-base"></i>
+                <input type="text" id="searchInput" placeholder="Buscar producto (ej. Jabón, Cloro, Desengrasante)..." oninput="applyFilters()" class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 text-xs sm:text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DEL CATÁLOGO -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 flex-grow w-full">
+        <!-- Contador de resultados -->
+        <div class="flex justify-between items-center mb-5 sm:mb-6">
+            <h2 class="text-lg sm:text-xl font-bold text-slate-800 flex items-center gap-2">
+                <i class="fa-solid fa-boxes-stacked text-indigo-600"></i>
+                Catálogo de Productos
+            </h2>
+            <span id="resultsCount" class="text-[11px] sm:text-xs font-bold text-slate-500 bg-slate-200 px-2.5 py-1 rounded-lg">0 productos</span>
+        </div>
+
+        <!-- Grid de productos -->
+        <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+            <!-- Cargados dinámicamente por JS -->
+        </div>
+
+        <!-- Vista vacía si no hay coincidencias -->
+        <div id="emptyCatalog" class="hidden py-16 text-center space-y-4">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 text-2xl sm:text-3xl">
+                <i class="fa-solid fa-soap"></i>
+            </div>
+            <h3 class="text-base sm:text-lg font-bold text-slate-700">No se encontraron productos</h3>
+            <p class="text-xs sm:text-sm text-slate-500">Intenta buscar con otros términos o cambia la categoría seleccionada.</p>
+            <button onclick="resetFilters()" class="px-4 py-2 bg-indigo-50 text-indigo-600 font-bold text-xs rounded-xl hover:bg-indigo-100 transition">
+                Ver todos los productos
+            </button>
+        </div>
+    </main>
+
+    <!-- DRAWER DEL CARRITO DE COMPRAS CON BOTÓN DE MAPA INTERACTIVO -->
+    <div id="overlay" onclick="toggleCart()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+
+    <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-full max-w-full sm:max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <!-- Header Carrito -->
+        <div class="p-4 bg-indigo-900 text-white flex items-center justify-between shadow-md">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg overflow-hidden border border-indigo-400 shadow-md bg-white p-0.5 flex items-center justify-center">
+                    <img src="kreabyts.jpg" alt="Logo Krea'byts" class="w-full h-full object-contain">
+                </div>
+                <h3 class="font-extrabold text-base sm:text-lg">Tu Pedido Krea'byts</h3>
+            </div>
+            <button onclick="toggleCart()" class="w-8 h-8 rounded-lg bg-indigo-800 text-indigo-200 hover:bg-indigo-700 hover:text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Banner Dinámico de Progreso / Descuento Al Mayor -->
+        <div id="wholesalePromoBanner" class="p-3 bg-indigo-50 border-b border-indigo-100 text-xs font-medium text-slate-600 text-center">
+            <!-- Rellenado dinámicamente por cart.js -->
+        </div>
+
+
+
+        <!-- Lista de items -->
+        <div id="cartItems" class="p-4 sm:p-5 flex-grow overflow-y-auto space-y-4 divide-y divide-slate-100">
+            <!-- Generado dinámicamente por cart.js -->
+        </div>
+
+        <!-- Footer Carrito Compacto -->
+        <div class="p-3 bg-slate-50 border-t border-slate-200 space-y-2">
+
+            <!-- Dirección + botón mapa en una fila -->
+            <div class="flex gap-1.5">
+                <input type="text" id="customerAddress" placeholder="📍 Dirección o referencia..." class="flex-1 text-[11px] px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500 min-w-0">
+                <button type="button" onclick="openMapModal()" class="flex-shrink-0 px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold rounded-lg flex items-center gap-1 transition">
+                    <i class="fa-solid fa-map-pin text-[10px]"></i> Mapa
+                </button>
+            </div>
+
+            <!-- Delivery Fee Checkbox -->
+            <div class="flex flex-col gap-1.5 text-[10px] font-semibold">
+                <label class="flex items-center gap-2 bg-indigo-50 border border-indigo-200 rounded-lg px-2 py-2 cursor-pointer hover:bg-indigo-100 transition">
+                    <input type="checkbox" id="deliveryFeeCheck" class="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4" onchange="updateCartUI()">
+                    <span class="text-indigo-800 leading-tight text-xs font-bold flex-1">
+                        Solicitar Delivery (+ Bs. 200.00)
+                        <span class="block text-[9px] font-normal text-indigo-600/80 mt-0.5">*Será gratis hasta cierto punto acordado por WhatsApp.</span>
+                    </span>
+                    <i class="fa-solid fa-motorcycle text-indigo-500 text-sm"></i>
+                </label>
+            </div>
+
+            <!-- Zonas delivery ultra compactas en una línea -->
+            <div class="flex flex-col gap-1.5 text-[10px] font-semibold">
+                <label class="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-lg px-2 py-1.5 cursor-pointer hover:bg-amber-100 transition">
+                    <input type="checkbox" id="outsideLimitsCheck" class="rounded text-amber-600 focus:ring-amber-500 w-3 h-3 mt-0.5">
+                    <span class="text-amber-800 leading-tight">Mi dirección está <strong>fuera de los límites</strong> (Más allá de Obelisco / La Juana). <br><span class="text-[9px] opacity-80 font-normal">*Al marcar esta opción, el pago debe ser por Pago Móvil.</span></span>
+                </label>
+            </div>
+
+            <!-- Total -->
+            <div class="flex justify-between items-center bg-white border border-slate-200 rounded-lg px-3 py-2">
+                <span class="text-xs font-extrabold text-slate-700">Total:</span>
+                <div class="text-right">
+                    <span id="cartTotal" class="text-sm font-black text-indigo-600">Bs. 0.00</span>
+                    <div id="cartSavings" class="text-[10px] font-bold text-emerald-600 hidden"></div>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="flex items-center gap-2">
+                <button onclick="checkoutWhatsApp()" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs rounded-lg shadow-md shadow-emerald-200 transition flex items-center justify-center gap-1.5 active:scale-95">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    Enviar Pedido
+                </button>
+                <button onclick="clearCart()" class="py-2 px-3 bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 font-semibold text-xs rounded-lg transition flex items-center gap-1.5 border border-slate-200">
+                    <i class="fa-solid fa-trash-can text-xs"></i> Vaciar
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MODAL DE MAPA INTERACTIVO (LEAFLET + GOOGLE MAPS) -->
+    <div id="mapModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-4 sm:p-5 shadow-2xl space-y-3.5 flex flex-col max-h-[90vh]">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-map-location-dot text-indigo-600 text-xl"></i>
+                    <div>
+                        <h3 class="font-extrabold text-base text-slate-900">Ubicación Exacta en el Mapa</h3>
+                        <p class="text-[11px] text-slate-500">Toca o arrastra el pin hasta la puerta de tu casa.</p>
+                    </div>
+                </div>
+                <button onclick="closeMapModal()" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Contenedor del Mapa Leaflet -->
+            <div id="mapContainer" class="w-full h-64 sm:h-80 rounded-xl border border-slate-200 shadow-inner overflow-hidden relative z-10"></div>
+
+            <!-- Pie de modal con coordenadas y confirmación -->
+            <div class="space-y-2 pt-1">
+                <div id="mapCoordText" class="text-xs text-slate-600 bg-slate-50 p-2 rounded-lg border border-slate-200 text-center font-medium">
+                    📍 Cargando ubicación...
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="closeMapModal()" class="w-1/3 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">
+                        Cancelar
+                    </button>
+                    <button onclick="confirmMapLocation()" class="w-2/3 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs rounded-xl shadow-md transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-check"></i> Usar esta Ubicación en Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN -->
+    <div id="confirmModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4 text-center">
+            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto text-xl">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 id="confirmTitle" class="font-bold text-base text-slate-900">¿Estás seguro?</h3>
+            <p id="confirmMessage" class="text-xs text-slate-600">Esta acción no se podrá deshacer.</p>
+            <div class="flex gap-2 pt-2">
+                <button id="btnConfirmCancel" class="w-1/2 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">
+                    Cancelar
+                </button>
+                <button id="btnConfirmOk" class="w-1/2 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl transition">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE MÉTODO DE PAGO -->
+    <div id="paymentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4 text-center">
+            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl">
+                <i class="fa-solid fa-money-bill-wave"></i>
+            </div>
+            <h3 class="font-bold text-base text-slate-900">Método de Pago</h3>
+            <p class="text-xs text-slate-600 mb-2">Selecciona cómo deseas pagar tu pedido:</p>
+            <div class="flex flex-col gap-2">
+                <button onclick="showPagoMovilData()" class="w-full py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs rounded-xl border border-indigo-200 transition">
+                    <i class="fa-solid fa-mobile-screen-button mr-1"></i> Pago Móvil
+                </button>
+                <button onclick="finalizeWhatsAppCheckout('Efectivo')" class="w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-xs rounded-xl border border-emerald-200 transition">
+                    <i class="fa-solid fa-money-bill mr-1"></i> Efectivo
+                </button>
+                <button onclick="finalizeWhatsAppCheckout('Directamente con la Empresa')" class="w-full py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs rounded-xl border border-slate-200 transition">
+                    <i class="fa-solid fa-store mr-1"></i> Directamente con la Empresa
+                </button>
+            </div>
+            <div class="pt-2">
+                <button onclick="closePaymentModal()" class="w-full py-2 text-slate-500 hover:text-rose-600 font-bold text-xs transition underline">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DATOS PAGO MÓVIL -->
+    <div id="pagoMovilModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full shadow-2xl overflow-hidden">
+            <!-- Header -->
+            <div class="bg-indigo-700 px-5 py-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-mobile-screen-button text-lg"></i>
+                    <h3 class="font-extrabold text-sm">Datos para Pago Móvil</h3>
+                </div>
+                <button onclick="closePagoMovilModal()" class="w-7 h-7 rounded-lg bg-indigo-600 hover:bg-indigo-500 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Datos copiables -->
+            <div class="p-5 space-y-3">
+                <p class="text-xs text-slate-500 text-center font-medium">Toca el dato para copiarlo rápidamente 👇</p>
+
+                <!-- Teléfono -->
+                <div onclick="copyData('04125161166', this)" class="flex items-center justify-between bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3 cursor-pointer hover:bg-indigo-100 active:scale-95 transition select-none">
+                    <div class="text-left">
+                        <p class="text-[10px] font-bold text-indigo-500 uppercase tracking-wide">Teléfono</p>
+                        <p class="text-base font-black text-indigo-900 tracking-wider">0412-516-1166</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-indigo-400">
+                        <i class="fa-solid fa-copy text-lg"></i>
+                        <span class="text-[9px] font-bold">Copiar</span>
+                    </div>
+                </div>
+
+                <!-- Cédula -->
+                <div onclick="copyData('2609759', this)" class="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 cursor-pointer hover:bg-emerald-100 active:scale-95 transition select-none">
+                    <div class="text-left">
+                        <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-wide">Cédula (C.I.)</p>
+                        <p class="text-base font-black text-emerald-900 tracking-wider">V-2.609.759</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-emerald-500">
+                        <i class="fa-solid fa-copy text-lg"></i>
+                        <span class="text-[9px] font-bold">Copiar</span>
+                    </div>
+                </div>
+
+                <!-- Banco -->
+                <div onclick="copyData('Provincial', this)" class="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 cursor-pointer hover:bg-amber-100 active:scale-95 transition select-none">
+                    <div class="text-left">
+                        <p class="text-[10px] font-bold text-amber-600 uppercase tracking-wide">Banco</p>
+                        <p class="text-base font-black text-amber-900 tracking-wider">BBVA Provincial</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-amber-500">
+                        <i class="fa-solid fa-copy text-lg"></i>
+                        <span class="text-[9px] font-bold">Copiar</span>
+                    </div>
+                </div>
+
+                <!-- Aviso -->
+                <div class="bg-slate-100 rounded-xl px-4 py-2 text-center">
+                    <p class="text-[10px] text-slate-600 font-semibold">✅ Después de realizar el pago, envía la <strong>captura de pantalla</strong> por WhatsApp para confirmar tu pedido.</p>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="px-5 pb-5 space-y-2">
+                <!-- Botón principal: Enviar Pedido + Captura -->
+                <button onclick="sendOrderAndCapture()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm rounded-xl shadow-lg shadow-emerald-200 transition flex items-center justify-center gap-2 active:scale-95">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    Enviar Pedido y Captura
+                </button>
+                <button onclick="closePagoMovilModal()" class="w-full py-2 text-slate-500 hover:text-rose-600 font-bold text-xs transition underline">
+                    Volver
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 left-4 sm:left-auto z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- FOOTER RESPONSIVO -->
+    <footer class="bg-slate-900 text-white mt-auto border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-6 text-center md:text-left">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="space-y-2">
+                    <a href="#" class="inline-flex items-center gap-3">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden border-2 border-slate-700 bg-white p-0.5 flex items-center justify-center">
+                            <img src="kreabyts.jpg" alt="Logo Krea'byts" class="w-full h-full object-contain">
+                        </div>
+                        <div class="flex items-baseline leading-none">
+                            <span class="text-2xl sm:text-3xl font-black tracking-tight text-white">Krea'byts</span>
+                        </div>
+                    </a>
+                    <p class="text-slate-400 text-xs max-w-md">
+                        <i class="fa-solid fa-location-dot text-indigo-400 mr-1"></i> Barquisimeto, Estado Lara, Venezuela. <br>
+                        Productos formulados para máxima desinfección y rendimiento. ¡15% de descuento al mayor a partir de 10 litros por producto!
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                    <!-- Botón de Contacto Directo con la Empresa a través de WhatsApp -->
+                    <a href="https://wa.me/584121665971?text=Hola%20Krea'byts,%20quisiera%20contacto%20directo%20con%20la%20empresa%20e%20informaci%C3%B3n%20de%20sus%20productos." target="_blank" class="w-full sm:w-auto px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition shadow-lg shadow-emerald-900/30">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Contacto Directo con la Empresa
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-6 flex flex-col sm:flex-row justify-between items-center text-slate-500 text-xs gap-3">
+                <p>&copy; <span id="yearSpan"></span> Krea'byts. Todos los derechos reservados.</p>
+                <p class="text-[11px]">Optimizado para dispositivos móviles y atención directa al cliente.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LIBRERÍA HTML2CANVAS PARA GENERAR RECIBO EN IMAGEN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- PLANTILLA OCULTA DEL RECIBO -->
+    <!-- Se posiciona fuera de la pantalla para que no moleste visualmente pero pueda ser capturada por html2canvas -->
+    <div id="receiptTemplateContainer" class="fixed top-0 left-[-9999px] z-0">
+        <div id="receiptCaptureArea" class="bg-white w-[500px] p-8 font-sans text-slate-900 border-[12px] border-double border-indigo-900/10 shadow-sm relative">
+            
+            <!-- Decoraciones de esquina estilo Art Deco simplificado -->
+            <div class="absolute top-2 left-2 w-6 h-6 border-t-4 border-l-4 border-indigo-900"></div>
+            <div class="absolute top-2 right-2 w-6 h-6 border-t-4 border-r-4 border-indigo-900"></div>
+            <div class="absolute bottom-2 left-2 w-6 h-6 border-b-4 border-l-4 border-indigo-900"></div>
+            <div class="absolute bottom-2 right-2 w-6 h-6 border-b-4 border-r-4 border-indigo-900"></div>
+
+            <!-- Cabecera Logo -->
+            <div class="text-center mb-6 pt-2">
+                <div class="flex items-center justify-center gap-3 mb-2">
+                    <img src="kreabyts.jpg" alt="Logo" class="w-16 h-16 object-contain rounded-xl shadow-md border border-indigo-100">
+                    <h1 class="text-5xl font-black tracking-tighter" style="color: #632c7a; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">Krea<span class="text-indigo-400"><i class="fa-solid fa-sparkles text-2xl relative -top-3"></i></span>byts</h1>
+                </div>
+                <h2 class="text-2xl font-black uppercase text-indigo-900 tracking-wide mt-2">Venta de Productos de Limpieza</h2>
+                <h3 class="text-lg font-black uppercase text-slate-800 tracking-wider mt-1">Tu Pedido Actualizado</h3>
+            </div>
+
+            <!-- Tabla de Precios -->
+            <table class="w-full border-collapse border-2 border-indigo-900 mb-6 text-lg">
+                <thead>
+                    <tr class="bg-indigo-900 text-white">
+                        <th class="border border-indigo-900 py-2 px-3 text-left font-black w-16 text-center">Cant.</th>
+                        <th class="border border-indigo-900 py-2 px-3 text-left font-black">Producto</th>
+                        <th class="border border-indigo-900 py-2 px-3 text-right font-black w-32">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="receiptTableBody">
+                    <!-- Las filas se inyectan dinámicamente desde cart.js -->
+                </tbody>
+                <tfoot>
+                    <tr id="receiptDeliveryRow" class="hidden bg-amber-50">
+                        <td colspan="2" class="border border-indigo-900 py-2 px-3 text-right font-black text-amber-900">Colaboración Delivery</td>
+                        <td class="border border-indigo-900 py-2 px-3 text-right font-black text-amber-900" id="receiptDeliveryPrice">Bs. 200.00</td>
+                    </tr>
+                    <tr class="bg-slate-100">
+                        <td colspan="2" class="border border-indigo-900 py-3 px-3 text-right font-black text-xl uppercase">Total a Pagar</td>
+                        <td class="border border-indigo-900 py-3 px-3 text-right font-black text-xl text-indigo-900" id="receiptTotalPrice">Bs. 0.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- Pie del Recibo -->
+            <div class="text-center mt-6 pt-4 border-t-2 border-dashed border-indigo-200">
+                <p class="text-sm font-bold text-slate-600 flex items-center justify-center gap-1.5 mb-1">
+                    <i class="fa-brands fa-whatsapp text-emerald-500"></i> Pedido generado por WhatsApp
+                </p>
+                <p class="text-xs text-slate-400 font-medium" id="receiptDate">Fecha: --/--/----</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS EN LA RAÍZ -->
+    <script src="tour.js"></script>
+    <script src="products-data.js"></script>
+    <script src="ui.js"></script>
+    <script src="cart.js"></script>
+    <script src="products.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

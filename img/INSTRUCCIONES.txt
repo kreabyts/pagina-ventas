@@ -1,0 +1,7 @@
+Guarda aquí las imágenes de tus productos en formato JPG.
+El nombre del archivo debe ser EXACTAMENTE el mismo nombre del producto en el código, por ejemplo:
+- Jabón Ariel.jpg
+- Brisol.jpg
+- Desinfectante Lavanda.jpg
+
+No olvides respetar las mayúsculas, minúsculas y espacios.
